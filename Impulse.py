@@ -45,10 +45,16 @@ def banner():
 def check_access_key():
     print("Cheking Access Key...")
     try:
-        res = requests.get(f"https://app.numlookupapi.com/v1/validate/{access_key}").json()
+        res = requests.get(f"https://app.numlookupapi.com/v1/status?apikey={access_key}").json()
+        if res['month']['remaining'] > 0:
+            print(f"[SUCCESS] ACCESS KEY VALID")
+            return True
+        else:
+            print(f"[ERROR] ACCESS KEY NOT VALID")
+            return False
     except:
         print(f"[ERROR] ACCESS KEY NOT VALID")
-        return
+        return False
 
 # ====================================================================================================================================== #
 
