@@ -44,22 +44,17 @@ def banner():
 
 def check_access_key():
     print("Cheking Access Key...")
-    data = requests.get(f"https://apilayer.net/api/validate?access_key={access_key}").json()
-
-    if data['success'] == False:
-        banner()
-        print(f"{Fore.GREEN}[+] Valid Access Key\n")
-        return True
-    else:
-        print(f"{Fore.RED}[-] Invalid Access Key")
-        return False
-
+    try:
+        res = requests.get(f"https://app.numlookupapi.com/v1/validate/{access_key}").json()
+    except:
+        print(f"[ERROR] ACCESS KEY NOT VALID")
+        return
 
 # ====================================================================================================================================== #
 
 def get_information():
     number = input(f"{Fore.CYAN}Enter a phone number: ")
-    api = f"http://api.apilayer.com/number_verification/validate?access_key={access_key}&number={number}"
+    api = f"https://app.numlookupapi.com/v1/validate/{number}?apikey={access_key}"
     data = requests.get(api).json()
 
     if data['valid']:
