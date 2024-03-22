@@ -19,11 +19,6 @@ access_key = data['access_key']
 
 # ====================================================================================================================================== #
 
-# some more variables
-header = { "apikey": access_key }
-
-# ====================================================================================================================================== #
-
 def banner():
     # Clear the console
     if os.name == 'nt':     # Windows
@@ -49,7 +44,7 @@ def banner():
 
 def check_access_key():
     print("Cheking Access Key...")
-    data = requests.get("https://api.apilayer.com/number_verification/validate", headers=header).json()
+    data = requests.get(f"https://apilayer.net/api/validate?access_key={access_key}").json()
 
     if data['success'] == False:
         banner()
@@ -65,7 +60,7 @@ def check_access_key():
 def get_information():
     number = input(f"{Fore.CYAN}Enter a phone number: ")
     api = f"http://api.apilayer.com/number_verification/validate?access_key={access_key}&number={number}"
-    data = requests.get(api, headers=header).json()
+    data = requests.get(api).json()
 
     if data['valid']:
         info_text = f"""
